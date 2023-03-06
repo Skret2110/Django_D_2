@@ -1,0 +1,164 @@
+Запуск Shell
+py manage.py shell
+from news.models import *
+
+Создать  пользователей:
+
+u1 = User.objects.create_user('Igor')
+u2 = User.objects.create_user('Skret')
+u3 = User.objects.create_user('Ivan')
+u4 = User.objects.create_user('Max')
+
+Создать  объекта модели Author:
+
+Author.objects.create(authorUser=u1)
+Author.objects.create(authorUser=u2)
+Author.objects.create(authorUser=u3)
+Author.objects.create(authorUser=u4)
+
+Добавить 4 категории в модель Category:
+
+Category.objects.create(name='Grill')
+Category.objects.create(name='Beef')
+Category.objects.create(name='Pork')
+Category.objects.create(name='Chiken')
+
+Добавить 2 ности:
+
+author=Author.objects.get(id=1)
+Post.objects.create(author=author, categoryType='NW',title='Grill BeefEater 1200 E', text='Gas grill BeefEater
+Discovery 1200 E BBQ 4 burners has an enlarged viewing window built into the grill lid, an updated thermometer.
+The BeefEater Discovery 1200 E BBQ 4 gas grill is equipped with a cast-iron baking tray and a grill grill.
+The large roomy BeefEater Discovery 1200 E grill will feed even the largest company. You can buy a BeefEater
+Discovery 1200 EB 4 burner grill in the Grill Center stores or in the Grill center online store.')
+
+
+
+author1=Author.objects.get(id=2)
+Post.objects.create(author=author1, categoryType='NW',title='Grill Briqman Suprime', text='Угольный гриль
+Briqman Supreme выполнен из качественной стали покрытой жаростойкой эмалью которая значительно увеличивает срок службы
+вашего гриля. Гриль Briqman  Supreme отлично подходить для приготовления брискета, рёбер, шашлыка, стейков, бургеров,
+ рыбных блюд и даже пиццы. Благодаря аксессуарам и дополнительному оборудованию, на гриле вы можете приготовить даже
+ сложные десерты. Briqman  Supreme имеет два широких колеса и усиленные стойки что обеспечивает мобильность и
+ устойчивость угольного гриля. Также, гриль  Supreme имеет дополнительную полку решетку которая увеличивает площадь
+ приготовления практически в два раза. Купить угольный гриль Briqman Supreme можно в магазинах Гриль Центр или на
+ нашем сайте.')
+
+Добавить статью
+
+
+author2=Author.objects.get(id=3)
+Post.objects.create(author=author2, categoryType='AR',title='Гриль очаг дровяной Keittio Plate D190',
+text='Гриль очаг Keittio Plate D190. Самый большой гриль очаг из линейки Scavora. Гриль Keittio Plate D190
+выполнен из Низколегированная сталь класса Cor-Ten. Отличное решение для загородного дома или ландшафта вашего
+особняка. Купить Гриль Keittio Plate D190 можно заказав его на сайте Grillcentr.ru или в наших магазинах
+Гриль Центр.')
+
+author3=Author.objects.get(id=4)
+Post.objects.create(author=author3, categoryType='AR',title='Как выбрать мясо', text='Доверяйте инстинктам.
+В конце концов, именно они помогли человечеству дожить до нынешних времен. Мясо должно нравиться вам на цвет и на запах.
+ Если вас хоть что-то смущает, не берите. Или, памятуя предков, отдайте мясо на дегустацию наименее ценному члену общины.
+  Мяса много, а вы у себя – один.')
+
+
+ Присвоить категории статьям.
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=1))
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=2))
+
+Post.objects.get(id=2).postCategory.add(Category.objects.get(id=1))
+Post.objects.get(id=2).postCategory.add(Category.objects.get(id=2))
+
+Post.objects.get(id=3).postCategory.add(Category.objects.get(id=2))
+
+Post.objects.get(id=4).postCategory.add(Category.objects.get(id=1))
+Post.objects.get(id=4).postCategory.add(Category.objects.get(id=2))
+Post.objects.get(id=4).postCategory.add(Category.objects.get(id=3))
+Post.objects.get(id=4).postCategory.add(Category.objects.get(id=4))
+
+Коментарии.
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, text = 'Nice')
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=2).authorUser, text = 'Cool')
+Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=Author.objects.get(id=3).authorUser, text = 'Not bad')
+Comment.objects.create(commentPost=Post.objects.get(id=4), commentUser=Author.objects.get(id=3).authorUser, text = 'LoL')
+Comment.objects.create(commentPost=Post.objects.get(id=4), commentUser=Author.objects.get(id=3).authorUser, text = 'Thaks')
+Comment.objects.create(commentPost=Post.objects.get(id=4), commentUser=Author.objects.get(id=4).authorUser, text = 'Super')
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=3).authorUser, text = 'Thaks')
+
+
+Лайк
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=4).like()
+
+Post.objects.get(id=1).like()
+Post.objects.get(id=2).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=4).like()
+
+Дизлайк
+Comment.objects.get(id=1).dislike()
+
+Обновение рейтинга
+u1=Author.objects.get(id=1)
+u1.update_rating()
+u1.ratingAuthor
+
+u2=Author.objects.get(id=2)
+u2.update_rating()
+u2.ratingAuthor
+
+u3=Author.objects.get(id=3)
+u3.update_rating()
+u3.ratingAuthor
+
+u4=Author.objects.get(id=4)
+u4.update_rating()
+u4.ratingAuthor
+
+Рейтинг лучшего
+
+a=Author.objects.order_by('-ratingAuthor')[:1]
+ for i in a:
+     i.ratingAuthor
+     i.authorUser.username
+
+Выводим рейтинги всех пользователей применяя сортировку:
+	>>> a = Author.objects.order_by('-ratingAuthor')
+	>>> a
+Выводим рейтинги и всех пользователей применяя цикл for:
+	>>> for i in a:
+	...     i.ratingAuthor
+	...     i.authorUser.username
+
+
+Применяем метод preview() к постам:
+	>>> Post.objects.get(id=1).preview()
+	'Gas grill BeefEater Discovery 1200 E BBQ 4 burners has an enlarged viewing window built into the grill lid, an updated therm...'
+
+
+Определяем лучшей пост по лайкам и дислайкам:
+	>>> bestPost = Post.objects.order_by('-rating')[:1]
+	>>> bestPost
+	<QuerySet [<Post: Post object (1)>]>
+
+
+Выводм дату добавления, username автора, рейтинг, заголовок и превью лучшей статьи
+	>>> for i in bestPost:
+	...     i.dateCreation
+	...     i.author.authorUser
+	...     i.rating
+	...     i.title
+	...     i.preview()
+
+
+Выводим все комментарии (дата, пользователь, рейтинг, текст) к этой статье.
+	>>> bestPostCom = Comment.objects.filter(commentPost=1)
+	>>> bestPostCom
+<QuerySet [<Comment: Comment object (1)>, <Comment: Comment object (2)>]>
+Выводим через цикл for:
+	>>> for w in bestPostCom:
+	...     w.dateCreation
+	...     w.commentUser
+	...     w.rating
+	...     w.text
+
+
